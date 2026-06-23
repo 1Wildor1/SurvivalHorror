@@ -1,8 +1,11 @@
 using UnityEngine;
+using TMPro;
 
 public class FlashlightPickup : MonoBehaviour
 {
     public Transform flashlightHolder;
+
+    public GameObject pickupText;
 
     private bool playerNear = false;
 
@@ -16,6 +19,8 @@ public class FlashlightPickup : MonoBehaviour
 
     void PickUp()
     {
+        pickupText.SetActive(false);
+
         transform.SetParent(flashlightHolder);
 
         transform.localPosition = Vector3.zero;
@@ -33,14 +38,19 @@ public class FlashlightPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Подошли к фонарику");
         if (other.CompareTag("Player"))
+        {
             playerNear = true;
+            pickupText.SetActive(true);
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
+        {
             playerNear = false;
+            pickupText.SetActive(false);
+        }
     }
 }
